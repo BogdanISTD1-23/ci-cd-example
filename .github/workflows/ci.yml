@@ -1,11 +1,8 @@
 name: Simple CI Example
-
 on: [push]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Загрузка кода
         uses: actions/checkout@v3
@@ -15,3 +12,11 @@ jobs:
           echo "Проверяем код..."
           ls -la
           echo "CI успешно выполнен!"
+
+      - name: Проверка HTML-файла
+        run: |
+          if test -f index.html; then
+            echo "Файл найден!";
+          else
+            echo "Файл НЕ найден!" && exit 1;
+          fi
