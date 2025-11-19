@@ -1,22 +1,28 @@
 name: Simple CI Example
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Загрузка кода
         uses: actions/checkout@v3
 
-      - name: Проверка содержимого
+      - name: Проверка содержимого репозитория
         run: |
           echo "Проверяем код..."
           ls -la
-          echo "CI успешно выполнен!"
 
-      - name: Проверка HTML-файла
+      - name: Проверка существования HTML-файла
         run: |
-          if test -f index.html; then
-            echo "Файл найден!";
+          if [ -f "index.html" ]; then
+            echo "HTML-файл найден! Проверка прошла успешно."
           else
-            echo "Файл НЕ найден!" && exit 1;
+            echo "Ошибка: HTML-файл не найден!"
+            exit 1
           fi
+
+      - name: Финальное сообщение
+        run: echo "Весь CI-процесс завершен успешно!"
